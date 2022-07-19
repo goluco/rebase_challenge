@@ -1,9 +1,10 @@
 #!/bin/bash
 
-docker run \
-  --rm \
-  -w /app \
-  -v $(pwd):/app \
-  -p 3000:3000 \
-  ruby \
-  bash -c "gem install rack sinatra puma && ruby server.rb"
+docker network create medical_records_app
+
+docker run -d --network medical_records_app --network-alias postgres -v medical_record_postgres_data:/var/lib/postgres -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -e POSTGRES_DB=medical_record postgres
+
+docker run --rm --network medical_records_app -w /app -v $(pwd):/app -p 3000:3000 ruby bash -c "gem install rack sinatra puma && ruby server.rb"
+
+
+  
