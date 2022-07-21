@@ -3,10 +3,24 @@
 require 'spec_helper'
 require 'import'
 
-describe 'Import' do
-  it 'Deve ser da classe Import' do
-    import = Import.new
+describe '#new' do
+  it 'deve ser da classe Import' do
+    import = Import.new('test', 'testdb')
 
     expect(import.class).to eq Import
+  end
+end
+
+describe '#create_table' do
+  it 'deve criar uma tabela na base de dados' do
+    import = Import.new('test', 'testdb')
+
+    import.create_table
+    result = import.connection.exec(%q{
+      SELECT EXISTS ( SELECT FROM information_schema.tables WHERE table_schema =
+      'public' AND table_name = 'exams' )
+    })
+
+    expect(result.values).to include(['t'])
   end
 end
