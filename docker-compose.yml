@@ -22,7 +22,14 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: medical_records
+      DB: medical_records
+
+  test:
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: testdb
 
 volumes:
   medical_records-postgres-data:
