@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 require 'import'
+require 'csv'
 
 describe '#new' do
   it 'deve ser da classe Import' do
@@ -36,5 +37,29 @@ describe '#drop_table' do
     })
 
     expect(result.values).to include(['f'])
+  end
+end
+
+describe '#insert_data' do
+  it 'deve inserir os dados csv na tabela exams do banco de dados' do
+    import = Import.new('test', 'testdb')
+    import.create_table
+    rows = CSV.read('./test_data.csv', col_sep: ';')
+    rows.shift
+
+    rows.each do |row|
+      import.insert_data(row)
+    end
+
+    result = import.connection.exec('SELECT * FROM exams')
+    expect(result.values).to include(rows[0])
+    expect(result.values).to include(rows[1])
+    expect(result.values).to include(rows[2])
+    expect(result.values).to include(rows[3])
+    expect(result.values).to include(rows[4])
+    expect(result.values).to include(rows[5])
+    expect(result.values).to include(rows[6])
+    expect(result.values).to include(rows[7])
+    expect(result.values).to include(rows[8])
   end
 end

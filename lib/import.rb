@@ -34,4 +34,11 @@ class Import
   def drop_table
     @connection.exec('DROP TABLE IF EXISTS exams')
   end
+
+  def insert_data(data)
+    @connection.exec_params(
+      "INSERT INTO exams VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)",
+      data
+    )
+  end
 end
