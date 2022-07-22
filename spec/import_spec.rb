@@ -24,3 +24,17 @@ describe '#create_table' do
     expect(result.values).to include(['t'])
   end
 end
+
+describe '#drop_table' do
+  it 'deve deletar tabela caso ela exista' do
+    import = Import.new('test', 'testdb')
+
+    import.drop_table
+    result = import.connection.exec(%q{
+      SELECT EXISTS ( SELECT FROM information_schema.tables WHERE table_schema =
+      'public' AND table_name = 'exams' )
+    })
+
+    expect(result.values).to include(['f'])
+  end
+end

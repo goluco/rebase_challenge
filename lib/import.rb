@@ -30,4 +30,8 @@ class Import
         )
     })
   end
+
+  def drop_table
+    @connection.exec('DROP TABLE IF EXISTS exams')
+  end
 end
