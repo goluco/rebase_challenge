@@ -1,18 +1,45 @@
-# Rebase Challenge 2022
+# API para consulta de exame médico
 
-API em Ruby para listagem de exames médicos.
+API em Ruby para listagem de exames médicos desenvolvida para o [Desafio Rebase 2022](https://git.campuscode.com.br/core-team/rebase-challenge-2022)
 
 ## Tech Stack
 
 * Docker
 * Ruby
+* Postgres
 
 ## Running
 
+Baixe a aplicação, abra o terminal e digite:
+
 ```bash
-$ bash run
-$ open http://localhost:3000/tests
+$ docker-compose up 
 ```
+Em seguida, abra no terminal de sua preferência o endereço: `http://localhost:3000/tests`
+
+Espere cerca de 30 segundos a 1 minuto, e visualize o resultado no browser de sua preferência.
+
+## Testing
+
+Para rodar os testes, abra o terminal e digite:
+
+```bash
+$ docker-compose up -d
+```
+
+Espere os containers rodarem, e em seguida digite:
+
+```bash
+$ docker exec -it rebase_challenge_app_1 bash
+```
+
+O terminal do container que está rodando a aplicação ruby abrirá. Então digite:
+
+```bash
+$ rspec
+```
+
+E veja o resultado dos testes.
 
 ## Requisito funcional
 
