@@ -30,13 +30,7 @@ $ docker-compose up -d
 Espere os containers rodarem, e em seguida digite:
 
 ```bash
-$ docker exec -it rebase_challenge_app_1 bash
-```
-
-O terminal do container que está rodando a aplicação ruby abrirá. Então digite:
-
-```bash
-$ rspec
+$ docker exec rebase_challenge_app_1 rspec
 ```
 
 E veja o resultado dos testes.
