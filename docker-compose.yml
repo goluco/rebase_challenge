@@ -3,7 +3,7 @@ version: "3.7"
 services:
   app:
     image: ruby
-    command: bash -c 'bundle install && ruby server.rb'
+    command: bash -c 'bundle install && ruby import_from_csv.rb && ruby server.rb'
     ports: 
       - 3000:3000
     working_dir: /app
