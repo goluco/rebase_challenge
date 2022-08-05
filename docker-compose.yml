@@ -50,7 +50,7 @@ services:
 
   sidekiq:
     image: ruby
-    command: bash -c 'bundle install && sidekiq -r './server.rb' -C 2'
+    command: bash -c 'bundle install && sidekiq -r './server.rb' -c 8'
     working_dir: /sidekiq
     volumes:
       - ./sidekiq/:/sidekiq
