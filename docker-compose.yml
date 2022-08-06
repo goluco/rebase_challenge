@@ -46,7 +46,7 @@ services:
 
   sidekiq:
     image: ruby
-    command: bash -c 'bundle install && sidekiq -r ./my-worker.rb -c 8'
+    command: bash -c 'bundle install && sidekiq -r ./my-worker.rb -c 1'
     working_dir: /app/sidekiq
     volumes:
       - ./:/app
