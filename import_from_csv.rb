@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
-require 'sidekiq'
-require_relative './sidekiq/my-worker'
 require_relative './lib/import'
 require 'csv'
 
-Sidekiq.configure_server do |config|
-  config.redis = { url: 'redis://myredis:6379/0' }
-end
+rows = CSV.read('./data.csv', col_sep: ';')
+rows.shift
+import = Import.new('postgres', 'medical_records')
+import.drop_table
+import.create_table
 
-Sidekiq.configure_client do |config|
-  config.redis = { url: 'redis://myredis:6379/0' }
+rows.each do |row|
+  import.insert_data(row)
 end
-
-path = './data.csv'
-MyWorker.perform_async(path)

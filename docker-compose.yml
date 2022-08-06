@@ -3,7 +3,7 @@ version: "3.7"
 services:
   app:
     image: ruby
-    command: bash -c 'bundle install && ruby import_from_csv.rb && ruby server.rb'
+    command: bash -c 'bundle install && ruby import_from_csv.rb && sidekiq -r ./server.rb'
     ports:
       - 3000:3000
     depends_on:
@@ -46,7 +46,7 @@ services:
 
   sidekiq:
     image: ruby
-    command: bash -c 'bundle install && sidekiq -r '../server.rb' -c 8'
+    command: bash -c 'bundle install && sidekiq -r ./my-worker.rb -c 8'
     working_dir: /app/sidekiq
     volumes:
       - ./:/app
