@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 
 require 'sidekiq'
-require './sidekiq/worker'
+require_relative './sidekiq/my-worker'
 require_relative './lib/import'
 require 'csv'
 
-Sidekiq.configure_client do |config|
-  config.redis = { url = 'redis//redis:6379/0' }
+Sidekiq.configure_server do |config|
+  config.redis = { url: 'redis://myredis:6379/0' }
 end
 
-Worker.perform_async('./data_csv')
+Sidekiq.configure_client do |config|
+  config.redis = { url: 'redis://myredis:6379/0' }
+end
+
+path = './data.csv'
+MyWorker.perform_async(path)

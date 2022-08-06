@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 require 'pg'
-require 'sidekiq'
-require './sidekiq/worker'
-
-Sidekiq.configure_server do |config|
-  config.redis = { url: 'redis://redis:6379/0' }
-end
 
 class Import
   attr_reader :connection

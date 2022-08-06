@@ -4,7 +4,7 @@ services:
   app:
     image: ruby
     command: bash -c 'bundle install && ruby import_from_csv.rb && ruby server.rb'
-    ports: 
+    ports:
       - 3000:3000
     depends_on:
       - postgres
@@ -43,18 +43,18 @@ services:
       - 6379:6379
     volumes:
       - redis-data:/var/lib/redis
-    environment:
-      REDIS_USER: user
-      REDIS_PASSWORD: password
-      REDIS_DB: tempdb
 
   sidekiq:
     image: ruby
-    command: bash -c 'bundle install && sidekiq -r './server.rb' -c 8'
-    working_dir: /sidekiq
+    command: bash -c 'bundle install && sidekiq -r '../server.rb' -c 8'
+    working_dir: /app/sidekiq
     volumes:
-      - ./sidekiq/:/sidekiq
+      - ./:/app
       - bundle:/usr/local/bundle
+    depends_on:
+      - myredis
+      - postgres
+      - test
 
 volumes:
   medical_records-postgres-data:
