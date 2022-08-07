@@ -25,6 +25,11 @@ get '/tests' do
   query.results
 end
 
+get '/tests/:token' do |token|
+  query = Query.new('postgres', 'medical_records')
+  query.search(token)
+end
+
 Rack::Handler::Puma.run(
   Sinatra::Application,
   Port: 3000,

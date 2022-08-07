@@ -15,4 +15,10 @@ class Query
   rescue PG::UndefinedTable
     false
   end
+
+  def search(provided_token)
+    column = 'token resultado exame'
+    result = @connection.exec("SELECT * FROM exams WHERE '#{column}' = '#{provided_token}'")
+    result.map { |tuple| tuple }
+  end
 end
