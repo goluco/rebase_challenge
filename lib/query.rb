@@ -17,8 +17,17 @@ class Query
   end
 
   def search(provided_token)
-    column = 'token resultado exame'
-    result = @connection.exec("SELECT * FROM exams WHERE '#{column}' = '#{provided_token}'")
-    result.map { |tuple| tuple }
+    result = @connection.exec(%Q{ SELECT * FROM exams WHERE "token resultado exame" = '#{provided_token}' })
+    return false if result.cmd_tuples.zero?
+
+    patient_columns = ['token resultado exame', 'data exame', 'cpf',
+                       'nome paciente', 'email paciente', 'data nascimento paciente']
+    physician_columns = ['crm médico', 'crm médico estado', 'nome médico']
+    exam_columns = ['tipo exame', 'limites tipo exame', 'resultado tipo exame']
+    first_row = result.first
+    data = first_row.select { |key, _value| patient_columns.include?(key) }
+    data['médico'] = first_row.select { |key, _value| physician_columns.include?(key) }
+    data['exames'] = result.map { |row| row.select { |key, _value| exam_columns.include?(key) } }
+    data.to_json
   end
 end
