@@ -26,9 +26,7 @@ Baixe a aplicação, abra o terminal e digite:
 ```bash
 $ docker-compose up 
 ```
-Em seguida, abra no terminal de sua preferência o endereço: `http://localhost:3000/tests`
-
-Espere cerca de 30 segundos a 1 minuto, e visualize o resultado no browser de sua preferência.
+Em seguida, abra no terminal de sua preferência o endereço: `http://localhost:3000/tests` e visualize o resultado no browser de sua preferência.
 
 ## Testing
 
